@@ -4,7 +4,14 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    cakesAmount: 0
+  },
+  mutations: {
+    addCake (state, layers){
+      state.cakesAmount++;
+      console.log(layers);
+    }
+  },
   actions: {}
 });
