@@ -5,13 +5,25 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    cakesAmount: 0
+    cakesAmount: 0,
+    cakes: [],
+    orderId: 0
   },
   mutations: {
-    addCake (state, layers){
+    addCake(state, ...params) {
       state.cakesAmount++;
-      console.log(layers);
+      state.cakes.push({
+        cakeAmount: params[0].cakeAmount,
+        cakeName: params[0].cakeName,
+        totalPrice: params[0].totalPrice,
+        orderId: state.orderId
+      })
     }
   },
-  actions: {}
+  actions: {},
+  getters: {
+    getOrderedCakes(state){
+      return state.cakes;
+    }
+  }
 });

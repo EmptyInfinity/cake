@@ -2,7 +2,14 @@
   <div class="about">
     <h1>This is an about page {{ storeCounterPlusLocalCounter }}</h1>
     <h3>Ampunt of cakes:</h3>
-    <h3>Increase amount of cakes <button @click="addCake">+1</button></h3>
+    <h3>Increase amount of cakes
+      <button @click="addCake">+1</button>
+    </h3>
+    <ul v-for="order in getOrderedCakes" :key="order.orderId">
+      <li>{{ order.cakeName }}</li>
+      <li>{{ order.cakeAmount }}</li>
+      <li>{{ order.totalPrice }}</li>
+    </ul>
   </div>
 </template>
 
@@ -19,13 +26,16 @@ export default {
   computed: mapState({
     // count: state => state.count,
     // storeCount: 'count',
-    storeCounterPlusLocalCounter (state){
+    storeCounterPlusLocalCounter(state) {
       return this.count + state.count;
+    },
+    getOrderedCakes() {
+      return this.$store.state.cakes;
     }
   }),
   methods: {
-    addCake(){
-      store.commit('addCake');
+    addCake() {
+      store.commit("addCake");
     }
   }
 };

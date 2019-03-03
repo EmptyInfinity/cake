@@ -163,7 +163,11 @@ export default {
       }
     },
     addCake() {
-      store.commit("addCake", this.layers, this.cakesAmount);
+      store.commit("addCake", {
+        totalPrice: this.totalPrice,
+        cakeAmount: this.cakesAmount,
+        cakeName: this.cakeName
+      });
     }
   },
   computed: {
