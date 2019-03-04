@@ -12,10 +12,10 @@ export default new Router({
       component: Creation
     },
     {
-      path: "/about",
-      name: "about",
+      path: "/order",
+      name: "order",
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+        import(/* webpackChunkName: "order" */ "./views/Order.vue")
     },
     {
       path: "/pizza",

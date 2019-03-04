@@ -66,12 +66,12 @@
         <h3>Total height: {{ totalHeight }}mm.</h3>
         <span class="alert alert-danger mb-0 p-0 px-2" v-if="maxHeightUncorrect">Max height - 55mm.</span>
       </div>
-      <h3>Price for cake: {{ priceForCake }}$</h3>
+      <h3 class="mt-1">Price for cake: {{ priceForCake }}$ </h3>
     </div>
-    <h3>
+    <h3 v-if="orderMakeAbility">
       Add to order
       <input type="number" min="1" v-model.number="cakesAmount" class="input-text">
-      {{ cakeName }} cake
+      {{ cakeName }} cake and create new
       <button @click="addCake" class="btn btn-success btn-lg">
         <img
           src="http://icons.iconarchive.com/icons/iconsmind/outline/512/Shopping-Cart-icon.png"
@@ -80,8 +80,18 @@
         >
       </button>
     </h3>
+    <h3 v-if="orderMakeAbility">
+      Add to order
+      <input type="number" min="1" v-model.number="cakesAmount" class="input-text">
+      {{ cakeName }} cake and make payment
+      <router-link to="/order" @click="addCake" class="btn btn-success btn-lg"><img
+          src="http://icons.iconarchive.com/icons/iconsmind/outline/512/Shopping-Cart-icon.png"
+          width="30px"
+          alt
+        ></router-link> 
+    </h3>
     <hr>
-    <h3>Total price: {{ totalPrice }}$</h3>
+    <h3 v-if="orderMakeAbility">Total price: {{ totalPrice }}$</h3>
   </div>
 </template>
 
@@ -107,6 +117,7 @@ export default {
     totalHeight: 0,
     layerHeight: 5,
     priceForCake: 0,
+    orderMakeAbility: false,
     layers: []
   }),
   methods: {
@@ -146,6 +157,7 @@ export default {
         color: this.color,
         id: this.id
       });
+      this.orderMakeAbility = true;
       this.totalHeight += this.layerHeight;
       this.priceForCake += this.choisenPrice * this.layerHeight;
       this.id++;
@@ -156,7 +168,7 @@ export default {
         this.heightUncorrect = false;
         this.maxHeightUncorrect = false;
         this.totalHeight -= this.layerHeight;
-        this.priceForCake -= this.choisenPrice;
+        this.priceForCake -= this.choisenPrice*this.layerHeight;
         this.layers.splice(-1, 1);
       } else {
         return false;
@@ -179,6 +191,10 @@ export default {
 </script>
 
 <style lang="scss">
+.home{
+  max-width: 1200px;
+  margin: auto;
+}
 .table {
   td {
     padding: 0.5rem;

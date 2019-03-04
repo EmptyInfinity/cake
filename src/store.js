@@ -5,25 +5,33 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    cakesAmount: 0,
     cakes: [],
-    orderId: 0
+    orderId: 0,
+    totalPriceForCakes: 0
   },
   mutations: {
     addCake(state, ...params) {
-      state.cakesAmount++;
       state.cakes.push({
         cakeAmount: params[0].cakeAmount,
         cakeName: params[0].cakeName,
         totalPrice: params[0].totalPrice,
         orderId: state.orderId
       })
-    }
+      state.orderId++;
+      state.totalPriceForCakes += params[0].totalPrice;
+    },
+    removeCake(state, index){
+      state.totalPriceForCakes -= state.cakes[index].totalPrice;
+      state.cakes.splice(index,1);
+    },
   },
   actions: {},
   getters: {
     getOrderedCakes(state){
       return state.cakes;
+    },
+    getTotalPriceForCakes(state) {
+      return state.totalPriceForCakes;
     }
   }
 });
